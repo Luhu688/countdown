@@ -43,19 +43,19 @@ export default function Header() {
     if (timers.length <= 1) {
       return;
     }
-    
+
     // 如果标签栏未展开，则展开它
     if (!showAllTabs) {
       setShowAllTabs(true);
     }
-    
+
     setLastMouseMove(Date.now());
-    
+
     // 清除之前的隐藏计时器
     if (mouseMoveTimerRef.current) {
       clearTimeout(mouseMoveTimerRef.current);
     }
-    
+
     // 设置新的隐藏计时器（5秒后隐藏）
     mouseMoveTimerRef.current = setTimeout(() => {
       setShowAllTabs(false);
@@ -68,7 +68,7 @@ export default function Header() {
     if (timers.length <= 1) {
       return;
     }
-    
+
     if (!showAllTabs) {
       setShowAllTabs(true);
       // 清除其他定时器
@@ -100,30 +100,30 @@ export default function Header() {
     if (timers.length <= 1) {
       return;
     }
-    
+
     // 清除收起定时器（如果用户重新进入）
     if (leaveTimerRef.current) {
       clearTimeout(leaveTimerRef.current);
       leaveTimerRef.current = null;
     }
-    
+
     // 清除鼠标移动定时器
     if (mouseMoveTimerRef.current) {
       clearTimeout(mouseMoveTimerRef.current);
       mouseMoveTimerRef.current = null;
     }
-    
+
     // 如果已经展开，启动鼠标移动检测
     if (showAllTabs) {
       handleGlobalMouseMove();
       return;
     }
-    
+
     // 清除之前的展开定时器
     if (hoverTimerRef.current) {
       clearTimeout(hoverTimerRef.current);
     }
-    
+
     // 设置延迟展开
     hoverTimerRef.current = setTimeout(() => {
       setShowAllTabs(true);
@@ -138,13 +138,13 @@ export default function Header() {
     if (timers.length <= 1) {
       return;
     }
-    
+
     // 清除展开定时器
     if (hoverTimerRef.current) {
       clearTimeout(hoverTimerRef.current);
       hoverTimerRef.current = null;
     }
-    
+
     // 不再在鼠标离开时自动收起标签栏
     // 只有在全局鼠标移动停止5秒后才会收起
   };
@@ -171,7 +171,7 @@ export default function Header() {
     if (timers.length > 1) {
       document.addEventListener('mousemove', handleGlobalMouseMove);
     }
-    
+
     // 清理函数
     return () => {
       document.removeEventListener('mousemove', handleGlobalMouseMove);
@@ -184,7 +184,7 @@ export default function Header() {
       // 添加小延时，确保DOM已经更新
       setTimeout(() => {
         if (!tabsScrollRef.current) return;
-        
+
         if (showAllTabs) {
           // 在展开状态下，查找展开模式中的激活标签
           const expandedTabElement = document.getElementById(`expanded-timer-tab-${activeTimerId}`);
@@ -192,15 +192,15 @@ export default function Header() {
             const containerWidth = tabsScrollRef.current.clientWidth;
             const tabBounds = expandedTabElement.getBoundingClientRect();
             const containerBounds = tabsScrollRef.current.getBoundingClientRect();
-            
+
             // 计算标签左边缘相对于容器的位置
             const tabLeft = tabBounds.left - containerBounds.left + tabsScrollRef.current.scrollLeft;
             const tabRight = tabLeft + tabBounds.width;
-            
+
             // 添加一些边距确保完全可见
             const margin = 16;
             let scrollLeftTarget = tabsScrollRef.current.scrollLeft;
-            
+
             // 如果标签左边被遮挡，或者是第一个标签，确保完全显示
             if (tabLeft < margin) {
               scrollLeftTarget = Math.max(0, tabLeft - margin);
@@ -215,11 +215,11 @@ export default function Header() {
               const containerCenter = containerWidth / 2;
               scrollLeftTarget = tabCenter - containerCenter;
             }
-            
+
             // 确保不会滚动出边界
             const maxScrollLeft = tabsScrollRef.current.scrollWidth - containerWidth;
             scrollLeftTarget = Math.max(0, Math.min(scrollLeftTarget, maxScrollLeft));
-            
+
             tabsScrollRef.current.scrollTo({
               left: scrollLeftTarget,
               behavior: 'smooth'
@@ -230,7 +230,7 @@ export default function Header() {
           const activeTabElement = document.getElementById(`timer-tab-${activeTimerId}`);
           if (activeTabElement) {
             // 将激活的标签滚动到可见区域
-            activeTabElement.scrollIntoView({ 
+            activeTabElement.scrollIntoView({
               behavior: 'smooth',
               block: 'nearest',
               inline: 'center'
@@ -288,7 +288,7 @@ export default function Header() {
   // 保存编辑的计时器
   const saveEditedTimer = () => {
     if (!editingTimer) return;
-    
+
     if (editingTimer.isLimitedEdit) {
       // 限制编辑模式：只更新名字和颜色
       updateTimer(editingTimer.id, {
@@ -298,14 +298,14 @@ export default function Header() {
     } else {
       // 完整编辑模式：更新所有属性（倒计时）
       const targetDateObj = new Date(`${editingTimer.targetDate}T${editingTimer.targetTime}`);
-      
+
       updateTimer(editingTimer.id, {
         name: editingTimer.name,
         targetDate: targetDateObj.toISOString(),
         color: editingTimer.color
       });
     }
-    
+
     setEditingTimer(null);
     setShowColorPicker(false);
   };
@@ -313,7 +313,7 @@ export default function Header() {
   // 处理计时器类型选择
   const handleTimerTypeSelect = (type) => {
     setIsTimerTypeModalOpen(false);
-    
+
     switch (type) {
       case 'countdown':
         setIsCountdownModalOpen(true);
@@ -355,45 +355,43 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-40">
       <nav className="glass-card mx-4 mt-4 px-6 py-4 flex items-center justify-between relative">
         {/* Logo - 增强渐变效果，使用较深的相似色 */}
-        <motion.div 
+        <motion.div
           className="flex items-center justify-start z-10"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 
+          <h1
             className="text-xl md:text-2xl font-bold font-display bg-clip-text text-transparent"
-            style={{ 
-              backgroundImage: `linear-gradient(45deg, ${accentColor}, ${accentColor}66)` 
+            style={{
+              backgroundImage: `linear-gradient(45deg, ${accentColor}, ${accentColor}66)`
             }}
           >
-            <a href="https://timepulse.ravelloh.top/">TimePulse</a>
+            <a href="https://tickercountdown.app/">TickerCountDown</a>
           </h1>
         </motion.div>
 
         {/* 计时器选择器 - 桌面版 - 动态定位居中显示 */}
-        <div 
-          className={`hidden md:flex absolute top-1/2 z-0 overflow-hidden ${
-            showAllTabs 
-              ? 'w-80' 
-              : 'w-48'
-          }`}
-          style={{ 
-            left: '50%', 
-            transform: 'translate(-50%, -50%)' 
+        <div
+          className={`hidden md:flex absolute top-1/2 z-0 overflow-hidden ${showAllTabs
+            ? 'w-80'
+            : 'w-48'
+            }`}
+          style={{
+            left: '50%',
+            transform: 'translate(-50%, -50%)'
           }}
         >
-          <div 
+          <div
             ref={tabsScrollRef}
-            className={`flex items-center space-x-1 py-2 px-2 w-full scrollbar-hide relative ${
-              showAllTabs ? 'justify-start overflow-x-auto' : 'justify-center overflow-x-auto'
-            }`}
+            className={`flex items-center space-x-1 py-2 px-2 w-full scrollbar-hide relative ${showAllTabs ? 'justify-start overflow-x-auto' : 'justify-center overflow-x-auto'
+              }`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onWheel={handleWheel}
-            style={{ 
+            style={{
               WebkitOverflowScrolling: 'touch',
-              scrollbarWidth: 'none', 
+              scrollbarWidth: 'none',
               msOverflowStyle: 'none',
               overflowX: 'auto',
               margin: '0 auto',
@@ -404,7 +402,7 @@ export default function Header() {
                 // 记录起始点击位置
                 const startX = e.pageX - tabsScrollRef.current.offsetLeft;
                 const scrollLeft = tabsScrollRef.current.scrollLeft;
-                
+
                 const handleMouseMove = (e) => {
                   if (!tabsScrollRef.current) return;
                   // 计算滚动距离
@@ -412,12 +410,12 @@ export default function Header() {
                   const walk = (x - startX) * 2; // 加快滚动速度
                   tabsScrollRef.current.scrollLeft = scrollLeft - walk;
                 };
-                
+
                 const handleMouseUp = () => {
                   document.removeEventListener('mousemove', handleMouseMove);
                   document.removeEventListener('mouseup', handleMouseUp);
                 };
-                
+
                 document.addEventListener('mousemove', handleMouseMove);
                 document.addEventListener('mouseup', handleMouseUp);
               }
@@ -426,7 +424,7 @@ export default function Header() {
               if (tabsScrollRef.current) {
                 const startX = e.touches[0].clientX;
                 const scrollLeft = tabsScrollRef.current.scrollLeft;
-                
+
                 const handleTouchMove = (e) => {
                   if (!tabsScrollRef.current) return;
                   // 阻止页面滚动
@@ -435,12 +433,12 @@ export default function Header() {
                   const walk = (startX - x); // 滚动距离
                   tabsScrollRef.current.scrollLeft = scrollLeft + walk;
                 };
-                
+
                 const handleTouchEnd = () => {
                   tabsScrollRef.current.removeEventListener('touchmove', handleTouchMove);
                   tabsScrollRef.current.removeEventListener('touchend', handleTouchEnd);
                 };
-                
+
                 tabsScrollRef.current.addEventListener('touchmove', handleTouchMove, { passive: false });
                 tabsScrollRef.current.addEventListener('touchend', handleTouchEnd);
               }
@@ -448,12 +446,12 @@ export default function Header() {
           >
             {/* 展开状态的所有标签容器 - 仅在展开时显示 */}
             {showAllTabs && (
-              <motion.div 
+              <motion.div
                 className="flex space-x-2 py-2 px-4 min-w-max justify-center w-full"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ 
+                transition={{
                   duration: 0.5,
                   ease: [0.25, 0.46, 0.45, 0.94], // 更柔和的缓动函数
                   exit: {
@@ -470,7 +468,7 @@ export default function Header() {
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ 
+                    transition={{
                       duration: 0.4,
                       delay: index * 0.02, // 减少错开延迟
                       ease: [0.25, 0.46, 0.45, 0.94],
@@ -481,22 +479,21 @@ export default function Header() {
                         ease: [0.32, 0, 0.67, 0]
                       }
                     }}
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.01,
                       transition: { duration: 0.4, ease: "easeOut" }
                     }}
-                    whileTap={{ 
+                    whileTap={{
                       scale: 0.99,
                       transition: { duration: 0.2 }
                     }}
-                    className={`px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ease-out ${
-                      activeTimerId === timer.id 
-                        ? 'text-white shadow-lg' 
-                        : 'bg-gray-100/70 dark:bg-gray-800/70 text-gray-700 dark:text-gray-300 hover:bg-gray-200/70 dark:hover:bg-gray-700/70 backdrop-blur-sm'
-                    }`}
+                    className={`px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ease-out ${activeTimerId === timer.id
+                      ? 'text-white shadow-lg'
+                      : 'bg-gray-100/70 dark:bg-gray-800/70 text-gray-700 dark:text-gray-300 hover:bg-gray-200/70 dark:hover:bg-gray-700/70 backdrop-blur-sm'
+                      }`}
                     style={
-                      activeTimerId === timer.id 
-                        ? { backgroundColor: timer.color || '#0ea5e9' } 
+                      activeTimerId === timer.id
+                        ? { backgroundColor: timer.color || '#0ea5e9' }
                         : {}
                     }
                     onClick={() => setActiveTimerId(timer.id)}
@@ -507,7 +504,7 @@ export default function Header() {
                 ))}
               </motion.div>
             )}
-            
+
             {/* 收起状态下只显示当前激活的标签 */}
             {!showAllTabs && (
               <AnimatePresence mode="wait">
@@ -521,16 +518,16 @@ export default function Header() {
                       initial={{ opacity: 0, scale: 0.98 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
-                      transition={{ 
+                      transition={{
                         duration: 0.35,
                         ease: [0.25, 0.46, 0.45, 0.94],
                         layout: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
                       }}
-                      whileHover={{ 
+                      whileHover={{
                         scale: 1.005,
                         transition: { duration: 0.5, ease: "easeOut" }
                       }}
-                      whileTap={{ 
+                      whileTap={{
                         scale: 0.995,
                         transition: { duration: 0.2 }
                       }}
@@ -565,7 +562,7 @@ export default function Header() {
             >
               <FiPlus className="text-xl" />
             </button>
-            
+
             {/* 分享按钮 */}
             <button
               className="p-2 ml-1 rounded-full btn-glass-hover text-gray-700 dark:text-gray-300 cursor-pointer"
@@ -579,7 +576,7 @@ export default function Header() {
             >
               <FiShare2 className="text-xl" />
             </button>
-            
+
             {/* 全屏按钮 */}
             <button
               className="p-2 ml-1 rounded-full btn-glass-hover text-gray-700 dark:text-gray-300 cursor-pointer"
@@ -588,7 +585,7 @@ export default function Header() {
             >
               {isFullscreen ? <FiMinimize className="text-xl" /> : <FiMaximize className="text-xl" />}
             </button>
-            
+
             {/* 登录按钮 */}
             <button
               className="p-2 ml-1 rounded-full btn-glass-hover text-gray-700 dark:text-gray-300 cursor-pointer"
@@ -597,7 +594,7 @@ export default function Header() {
             >
               <FiUser className="text-xl" />
             </button>
-            
+
             {/* 主题切换 */}
             <button
               className="p-2 ml-1 rounded-full btn-glass-hover text-gray-700 dark:text-gray-300 cursor-pointer"
@@ -724,7 +721,7 @@ export default function Header() {
                   <FiSettings className="text-xl" />
                   <span className="text-xs ml-2 flex-1 text-right">{t('header.settings')}</span>
                 </button>
-                
+
                 {/* 添加"登录"按钮 */}
                 <button
                   className="flex items-center justify-between p-3 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-sm border border-gray-200/60 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-black/20 cursor-pointer transition-colors"
@@ -737,7 +734,7 @@ export default function Header() {
                   <FiUser className="text-xl" />
                   <span className="text-xs ml-2 flex-1 text-right">{t('header.login')}</span>
                 </button>
-                
+
                 {/* 添加"分享"按钮 */}
                 <button
                   className="flex items-center justify-between p-3 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-sm border border-gray-200/60 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-black/20 cursor-pointer transition-colors"
@@ -768,14 +765,13 @@ export default function Header() {
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.2 }}
-                      className={`px-4 py-2 rounded-lg text-left ${
-                        activeTimerId === timer.id 
-                          ? 'text-white' 
-                          : 'bg-white/10 dark:bg-black/10 backdrop-blur-sm border border-gray-200/60 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-black/20'
-                      }`}
+                      className={`px-4 py-2 rounded-lg text-left ${activeTimerId === timer.id
+                        ? 'text-white'
+                        : 'bg-white/10 dark:bg-black/10 backdrop-blur-sm border border-gray-200/60 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-black/20'
+                        }`}
                       style={
-                        activeTimerId === timer.id 
-                          ? { backgroundColor: timer.color || '#0ea5e9' } 
+                        activeTimerId === timer.id
+                          ? { backgroundColor: timer.color || '#0ea5e9' }
                           : {}
                       }
                       onClick={() => {
@@ -838,13 +834,13 @@ export default function Header() {
                   <h3 className="font-medium mb-2">
                     {editingTimer.isLimitedEdit ? t('modal.edit.editTimer') : t('modal.edit.editCountdown')}
                   </h3>
-                  
+
                   <div>
                     <label className="block text-sm font-medium mb-1">{t('modal.edit.name')}</label>
                     <input
                       type="text"
                       value={editingTimer.name}
-                      onChange={(e) => setEditingTimer({...editingTimer, name: e.target.value})}
+                      onChange={(e) => setEditingTimer({ ...editingTimer, name: e.target.value })}
                       className="w-full px-4 py-2 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-sm border border-white/20 dark:border-white/10 focus:ring-2 focus:ring-primary-500 focus:outline-none"
                     />
                   </div>
@@ -857,7 +853,7 @@ export default function Header() {
                         <input
                           type="date"
                           value={editingTimer.targetDate}
-                          onChange={(e) => setEditingTimer({...editingTimer, targetDate: e.target.value})}
+                          onChange={(e) => setEditingTimer({ ...editingTimer, targetDate: e.target.value })}
                           className="w-full px-4 py-2 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-sm border border-white/20 dark:border-white/10 focus:ring-2 focus:ring-primary-500 focus:outline-none"
                         />
                       </div>
@@ -867,7 +863,7 @@ export default function Header() {
                         <input
                           type="time"
                           value={editingTimer.targetTime}
-                          onChange={(e) => setEditingTimer({...editingTimer, targetTime: e.target.value})}
+                          onChange={(e) => setEditingTimer({ ...editingTimer, targetTime: e.target.value })}
                           className="w-full px-4 py-2 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-sm border border-white/20 dark:border-white/10 focus:ring-2 focus:ring-primary-500 focus:outline-none"
                         />
                       </div>
@@ -876,22 +872,22 @@ export default function Header() {
 
                   <div>
                     <label className="block text-sm font-medium mb-1">{t('modal.edit.color')}</label>
-                    <div 
+                    <div
                       className="h-10 w-full rounded-lg cursor-pointer"
                       style={{ backgroundColor: editingTimer.color }}
                       onClick={() => setShowColorPicker(!showColorPicker)}
                     ></div>
                     {showColorPicker && (
                       <div className="mt-2">
-                        <HexColorPicker 
-                          color={editingTimer.color} 
-                          onChange={(color) => setEditingTimer({...editingTimer, color})} 
+                        <HexColorPicker
+                          color={editingTimer.color}
+                          onChange={(color) => setEditingTimer({ ...editingTimer, color })}
                           className="w-full"
                         />
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="flex space-x-2 pt-2">
                     <button
                       className="flex-1 btn-glass-secondary"
@@ -912,7 +908,7 @@ export default function Header() {
               ) : (
                 <div className="max-h-96 overflow-y-auto">
                   {timers.map(timer => (
-                    <div 
+                    <div
                       key={timer.id}
                       className="flex items-center justify-between p-3 mb-2 rounded-lg bg-white/30 dark:bg-black/30 hover:bg-white/50 dark:hover:bg-black/50"
                       style={{
@@ -922,11 +918,11 @@ export default function Header() {
                       <div>
                         <h3 className="font-medium">{timer.name}</h3>
                         <p className="text-xs text-gray-500 dark:text-gray-400">
-                          {timer.type === 'stopwatch' 
+                          {timer.type === 'stopwatch'
                             ? t('timer.stopwatch')
-                            : timer.type === 'worldclock' 
-                            ? `${timer.country || t('timer.worldClock')} - ${timer.timezone || ''}`
-                            : new Date(timer.targetDate).toLocaleString()
+                            : timer.type === 'worldclock'
+                              ? `${timer.country || t('timer.worldClock')} - ${timer.timezone || ''}`
+                              : new Date(timer.targetDate).toLocaleString()
                           }
                         </p>
                       </div>
@@ -1032,7 +1028,7 @@ export default function Header() {
       {/* 计时器类型选择模态框 */}
       <AnimatePresence>
         {isTimerTypeModalOpen && (
-          <TimerTypeModal 
+          <TimerTypeModal
             onClose={closeAllModals}
             onSelectType={handleTimerTypeSelect}
           />

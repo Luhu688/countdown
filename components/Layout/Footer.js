@@ -96,10 +96,10 @@ export default function Footer() {
           {/* 关于  */}
           {/* <div>
             <h2 className="text-lg md:text-xl font-bold mb-2 md:mb-3 flex items-center text-gray-800 dark:text-white">
-              <FiInfo className="mr-2" /> {t('footer.about', '关于 TimePulse')}
+              <FiInfo className="mr-2" /> {t('footer.about', '关于 TickerCountDown')}
             </h2>
             <p className="mb-2 md:mb-3 text-sm text-gray-700 dark:text-gray-200">
-              {t('footer.description', 'TimePulse 是一个现代化的倒计时应用，支持多个计时器、数据同步和美观的动效展示。')}
+              {t('footer.description', 'TickerCountDown 是一个现代化的倒计时应用，支持多个计时器、数据同步和美观的动效展示。')}
             </p>
 
             <div className="mb-3">
