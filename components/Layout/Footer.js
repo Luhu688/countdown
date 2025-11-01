@@ -96,10 +96,10 @@ export default function Footer() {
           {/* 关于  */}
           {/* <div>
             <h2 className="text-lg md:text-xl font-bold mb-2 md:mb-3 flex items-center text-gray-800 dark:text-white">
-              <FiInfo className="mr-2" /> {t('footer.about', '关于 TickerCountDown')}
+              <FiInfo className="mr-2" /> {t('footer.about', '关于 Live Countdown')}
             </h2>
             <p className="mb-2 md:mb-3 text-sm text-gray-700 dark:text-gray-200">
-              {t('footer.description', 'TickerCountDown 是一个现代化的倒计时应用，支持多个计时器、数据同步和美观的动效展示。')}
+              {t('footer.description', 'Live Countdown 是一个现代化的倒计时应用，支持多个计时器、数据同步和美观的动效展示。')}
             </p>
 
             <div className="mb-3">
@@ -179,7 +179,7 @@ export default function Footer() {
 
         <div className="mt-3 md:mt-4 pt-2 border-t border-gray-300 dark:border-white/10 text-center text-xs text-gray-600 dark:text-gray-300">
           <p>
-            © {new Date().getFullYear()} <a className="underline" href="https://tickercountdown.app/">TickerCountDown </a>
+            © {new Date().getFullYear()} <a className="underline" href="https://livecountdown.cc/">Live Countdown </a>
           </p>
         </div>
       </div>

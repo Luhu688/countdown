@@ -367,7 +367,7 @@ export default function Header() {
               backgroundImage: `linear-gradient(45deg, ${accentColor}, ${accentColor}66)`
             }}
           >
-            <a href="https://tickercountdown.app/">TickerCountDown</a>
+            <a href="https://livecountdown.cc/">Live Countdown</a>
           </h1>
         </motion.div>
 
