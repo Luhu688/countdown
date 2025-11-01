@@ -82,11 +82,11 @@ function MyApp({ Component, pageProps }) {
     <ThemeProvider>
       <TimerProvider>
         <Head>
-          {/* <title>TickerCountDown - 现代化倒计时</title> */}
-          {/* <meta name="description" content="TickerCountDown - 一个现代化的倒计时网页应用" /> */}
+          {/* <title>Live Countdown - 现代化倒计时</title> */}
+          {/* <meta name="description" content="Live Countdown - 一个现代化的倒计时网页应用" /> */}
 
-          <title>TickerCountDown</title>
-          <meta name="description" content="TickerCountDown" />
+          <title>Live Countdown</title>
+          <meta name="description" content="Live Countdown" />
           <link rel="icon" href="/favicon.ico" />
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         </Head>
