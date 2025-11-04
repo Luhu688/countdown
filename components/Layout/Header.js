@@ -587,13 +587,13 @@ export default function Header() {
             </button>
 
             {/* 登录按钮 */}
-            <button
+            {/* <button
               className="p-2 ml-1 rounded-full btn-glass-hover text-gray-700 dark:text-gray-300 cursor-pointer"
               onClick={openLoginModal}
               data-umami-event={t('header.login')}
             >
               <FiUser className="text-xl" />
-            </button>
+            </button> */}
 
             {/* 主题切换 */}
             <button

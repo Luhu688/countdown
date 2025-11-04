@@ -84,7 +84,7 @@ export default function Layout({ children }) {
         {/* <UpdateToast /> */}
 
         {/* 修改 Footer 容器，适应不同屏幕大小 */}
-        <motion.div
+        {/* <motion.div
           ref={footerRef}
           style={{
             opacity: footerOpacity,
@@ -97,11 +97,11 @@ export default function Layout({ children }) {
           <div className="w-full">
             <Footer />
           </div>
-        </motion.div>
+        </motion.div> */}
 
         {/* 下滑提示 - 当footer显示时或已经滚动时隐藏 */}
 
-        {!showFooter && !hasScrolled && (
+        {/* {!showFooter && !hasScrolled && (
           <motion.div
             className="fixed bottom-24 left-0 right-0 mx-auto w-full text-center text-gray-400 text-sm pointer-events-none z-20"
             initial={{ opacity: 0.6 }}
@@ -119,10 +119,10 @@ export default function Layout({ children }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </motion.div>
-        )}
+        )} */}
 
         {/* 下方滚动空间 */}
-        <div className="h-screen"></div>
+        {/* <div className="h-screen"></div> */}
       </div>
     </ThemeColorSynchronizer>
   );
