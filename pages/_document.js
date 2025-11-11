@@ -12,6 +12,7 @@ class MyDocument extends Document {
           <link rel="manifest" href="/site.webmanifest" />
           <meta name="theme-color" content="#ffffff" />
           <script src="/register-sw.js" defer></script>
+          <script defer src="https://cdn.flook.co/p/cd086e27-949a-4342-aafc-4d00bdda35f0.js"></script>
         </Head>
         <body>
           <Main />
