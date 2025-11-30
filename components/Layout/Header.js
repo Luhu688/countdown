@@ -726,7 +726,7 @@ export default function Header() {
                 </button>
                 
                 {/* 添加"登录"按钮 */}
-                <button
+                {/* <button
                   className="flex items-center justify-between p-3 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-sm border border-gray-200/60 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-black/20 cursor-pointer transition-colors"
                   onClick={() => {
                     openLoginModal();
@@ -736,7 +736,7 @@ export default function Header() {
                 >
                   <FiUser className="text-xl" />
                   <span className="text-xs ml-2 flex-1 text-right">{t('header.login')}</span>
-                </button>
+                </button> */}
                 
                 {/* 添加"分享"按钮 */}
                 <button
