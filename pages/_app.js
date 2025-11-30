@@ -13,35 +13,35 @@ import notificationManager from '../utils/notificationManager';
 
 function MyApp({ Component, pageProps }) {
   const [mounted, setMounted] = useState(false);
-
+  
   useEffect(() => {
     setMounted(true);
-
+    
     // 页面加载完成后记录日志
-    console.log(`TimePulse 初始化完成 - ${new Date().toLocaleString()}`);
-
+    console.log(`Live Countdown 初始化完成 - ${new Date().toLocaleString()}`);
+    
     // 监听hash变化以支持umami统计
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
     };
-
+    
     // 检查URL中是否包含syncId参数
     const checkSyncId = async () => {
       const params = new URLSearchParams(window.location.search);
       const syncId = params.get('syncId');
       const syncPass = params.get('syncPass');
-
+      
       if (syncId) {
         // 保存同步ID
         localStorage.setItem('timepulse_sync_id', syncId);
         console.log(`已从URL导入同步ID: ${syncId}`);
-
+        
         // 如果提供了密码，也保存密码并尝试获取数据
         if (syncPass) {
           localStorage.setItem('timepulse_sync_password', syncPass);
           console.log(`已从URL导入同步密码`);
         }
-
+        
         // 清除URL参数但保留其他参数
         const newParams = new URLSearchParams(window.location.search);
         newParams.delete('syncId');
@@ -50,10 +50,10 @@ function MyApp({ Component, pageProps }) {
         window.history.replaceState({}, document.title, newUrl);
       }
     };
-
+    
     checkSyncId();
     window.addEventListener('hashchange', handleHashChange);
-
+    
     // 监听Service Worker控制状态变化
     if ('serviceWorker' in navigator) {
       // 监听控制器变化
@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps }) {
         console.log('Service Worker已接管页面，可以发送通知');
       });
     }
-
+    
     // 在开发模式下暴露测试函数到全局
     if (process.env.NODE_ENV === 'development') {
       window.testNotification = testNotification;
@@ -70,7 +70,7 @@ function MyApp({ Component, pageProps }) {
       console.log('- window.testNotification() - 测试基础通知功能');
       console.log('- window.notificationManager - 通知管理器实例');
     }
-
+    
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
@@ -82,11 +82,9 @@ function MyApp({ Component, pageProps }) {
     <ThemeProvider>
       <TimerProvider>
         <Head>
-          {/* <title>Live Countdown - 现代化倒计时</title> */}
-          {/* <meta name="description" content="Live Countdown - 一个现代化的倒计时网页应用" /> */}
-
-          <title>Live Countdown</title>
-          <meta name="description" content="Live Countdown" />
+          {/* <title>Live Countdown - 现代化倒计时</title>*/}
+          <title>TickerCountDown</title>
+          <meta name="description" content="Live Countdown - 一个现代化的倒计时网页应用" />
           <link rel="icon" href="/favicon.ico" />
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         </Head>

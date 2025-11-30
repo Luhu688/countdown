@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TimePulse</title>
+  <title>Live Countdown</title>
   <style>
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -97,7 +97,7 @@
   <div class="container">
     <div class="icon">📶</div>
     <h1 id="title">您当前处于离线模式</h1>
-    <p id="message">TimePulse 检测到您的设备已断开网络连接。您可以继续使用基本功能，但数据同步和分享等功能将暂时不可用。</p>
+    <p id="message">Live Countdown 检测到您的设备已断开网络连接。您可以继续使用基本功能，但数据同步和分享等功能将暂时不可用。</p>
     <p id="description">请检查您的网络连接，然后刷新页面。</p>
     <button class="btn" onclick="window.location.reload()" id="return-btn">重新连接</button>
     
@@ -111,13 +111,13 @@
     const translations = {
       zh: {
         title: '您当前处于离线模式',
-        message: 'TimePulse 检测到您的设备已断开网络连接。您可以继续使用基本功能，但数据同步和分享等功能将暂时不可用。',
+        message: 'Live Countdown 检测到您的设备已断开网络连接。您可以继续使用基本功能，但数据同步和分享等功能将暂时不可用。',
         description: '请检查您的网络连接，然后刷新页面。',
         returnBtn: '重新连接'
       },
       en: {
         title: 'You are currently offline',
-        message: 'TimePulse detected that your device is disconnected from the network. You can continue to use basic functions, but data sync and sharing functions will be temporarily unavailable.',
+        message: 'Live Countdown detected that your device is disconnected from the network. You can continue to use basic functions, but data sync and sharing functions will be temporarily unavailable.',
         description: 'Please check your network connection and refresh the page.',
         returnBtn: 'Reconnect'
       }

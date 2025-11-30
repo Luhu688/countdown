@@ -1,6 +1,6 @@
 {
-  "name": "TimePulse",
-  "short_name": "TimePulse",
+  "name": "Live Countdown",
+  "short_name": "Live Countdown",
   "description": "现代化倒计时应用",
   "start_url": "/",
   "scope": "/",

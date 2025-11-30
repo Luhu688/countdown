@@ -13,16 +13,16 @@ let notificationTranslations = null;
  */
 function getCurrentLanguage() {
   if (typeof window === 'undefined') return 'zh-CN';
-
+  
   // 从 URL 参数获取语言
   const urlParams = new URLSearchParams(window.location.search);
   const langParam = urlParams.get('lang');
-
+  
   if (langParam) {
     if (langParam === 'en-US') return 'en-US';
     if (langParam === 'zh-CN') return 'zh-CN';
   }
-
+  
   // 默认返回中文
   return 'zh-CN';
 }
@@ -35,7 +35,7 @@ async function loadNotificationTranslations() {
   if (notificationTranslations) {
     return notificationTranslations;
   }
-
+  
   try {
     const lang = getCurrentLanguage();
     const locale = lang === 'en-US' ? 'en' : 'zh';
@@ -49,8 +49,6 @@ async function loadNotificationTranslations() {
   } catch (error) {
     console.error('Failed to load notification translations:', error);
     // 返回默认的中文翻译
-
-    // 倒计时通知结束
     return {
       notification: {
         messages: {
@@ -72,26 +70,26 @@ async function loadNotificationTranslations() {
  */
 async function getLocalizedNotificationMessage(key, replacements = {}) {
   const translations = await loadNotificationTranslations();
-
+  
   const getNestedValue = (obj, path) => {
     return path.split('.').reduce((current, pathKey) => {
       return current && current[pathKey] !== undefined ? current[pathKey] : null;
     }, obj);
   };
-
+  
   let message = getNestedValue(translations, key);
-
+  
   if (!message) {
     console.warn(`Translation not found for key: ${key}`);
     return key;
   }
-
+  
   // 替换变量
   Object.keys(replacements).forEach(placeholder => {
     const regex = new RegExp(`\\{${placeholder}\\}`, 'g');
     message = message.replace(regex, replacements[placeholder]);
   });
-
+  
   return message;
 }
 
@@ -131,7 +129,7 @@ export function shouldShowNotificationModal() {
   }
 
   const preference = getNotificationPreference();
-
+  
   // 如果用户已经选择了"不再提醒"，则不显示
   if (preference === 'denied') {
     return false;
@@ -163,7 +161,7 @@ async function checkNotificationPermission() {
 
   const permission = Notification.permission;
   console.log('当前通知权限状态:', permission);
-
+  
   return permission === 'granted';
 }
 
@@ -201,7 +199,7 @@ export async function requestNotificationPermission() {
  */
 export async function scheduleCountdownNotification(countdown, skipPermissionCheck = false) {
   console.log('scheduleCountdownNotification 被调用:', { countdown, skipPermissionCheck });
-
+  
   if (!countdown || !countdown.targetTime || !countdown.title) {
     console.error('无效的倒计时数据:', countdown);
     return { success: false, needsPermission: false };
@@ -267,7 +265,7 @@ export async function scheduleCountdownNotification(countdown, skipPermissionChe
   // 如果Service Worker尚未激活，将通知加入等待队列
   console.log('Service Worker未激活，将通知加入等待队列');
   pendingNotifications.push(notificationData);
-
+  
   // 监听Service Worker控制状态变化
   navigator.serviceWorker.ready.then(registration => {
     // 使用一次性控制器状态检查
@@ -285,7 +283,7 @@ export async function scheduleCountdownNotification(countdown, skipPermissionChe
         setTimeout(checkController, 500);
       }
     };
-
+    
     // 开始检查
     checkController();
   }).catch(error => {
@@ -301,7 +299,7 @@ export async function scheduleCountdownNotification(countdown, skipPermissionChe
  */
 export function cancelCountdownNotification(countdownId) {
   console.log('取消通知:', countdownId);
-
+  
   if ('serviceWorker' in navigator) {
     // 通知Service Worker取消定时器
     if (navigator.serviceWorker.controller) {
@@ -310,7 +308,7 @@ export function cancelCountdownNotification(countdownId) {
         id: countdownId
       });
     }
-
+    
     // 同时清理已显示的通知
     navigator.serviceWorker.ready.then(registration => {
       registration.getNotifications({ tag: countdownId }).then(notifications => {
@@ -329,13 +327,13 @@ export function cancelCountdownNotification(countdownId) {
  */
 export async function testNotification() {
   console.log('开始测试通知功能...');
-
+  
   // 检查浏览器支持
   if (!('Notification' in window)) {
     console.error('浏览器不支持通知');
     return false;
   }
-
+  
   // 检查权限
   if (Notification.permission !== 'granted') {
     const permission = await Notification.requestPermission();
@@ -344,7 +342,7 @@ export async function testNotification() {
       return false;
     }
   }
-
+  
   // 发送测试通知
   try {
     // 获取本地化的测试通知消息
@@ -354,13 +352,13 @@ export async function testNotification() {
     const testBody = await getLocalizedNotificationMessage(
       'notification.messages.testNotificationBody'
     );
-
+    
     const testCountdown = {
       id: 'test-' + Date.now(),
       title: testTitle,
       targetTime: Date.now() + 1000 // 1秒后触发
     };
-
+    
     // 创建通知数据（跳过标题处理，直接使用测试消息）
     const notificationData = {
       action: 'scheduleNotification',
@@ -369,7 +367,7 @@ export async function testNotification() {
       timestamp: testCountdown.targetTime,
       id: testCountdown.id
     };
-
+    
     // 直接发送到 Service Worker
     if (navigator.serviceWorker.controller) {
       navigator.serviceWorker.controller.postMessage(notificationData);

@@ -203,7 +203,7 @@ export function TimerProvider({ children }) {
   const [holidaysList, setHolidaysList] = useState([]);
 
   // 输出完整的启动时间
-  console.log(`TimePulse 应用启动 - ${new Date().toLocaleString()}`);
+  console.log(`Live Countdown 应用启动 - ${new Date().toLocaleString()}`);
 
   // 初始化节假日列表
   useEffect(() => {

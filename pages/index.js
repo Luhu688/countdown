@@ -111,7 +111,7 @@ export default function Home() {
 
   // 初始化日志
   useEffect(() => {
-    addLog('TimePulse 初始化完成');
+    addLog('Live Countdown 初始化完成');
     addLog(`当前主题: ${theme}`);
     addLog(`加载了 ${timers.length} 个计时器`);
   }, [theme, timers.length]);

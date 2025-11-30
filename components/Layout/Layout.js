@@ -12,27 +12,27 @@ export default function Layout({ children }) {
   const footerRef = useRef(null);
   const [showFooter, setShowFooter] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-
+  
   // 页面滚动时，Footer的透明度和z-index - 更早开始显示
   const footerOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.4, 0.6, 0.8],
+    scrollYProgress, 
+    [0, 0.4, 0.6, 0.8], 
     [0, 0, 0.5, 1]
   );
-
+  
   const footerBlur = useTransform(
-    scrollYProgress,
-    [0.4, 0.8],
+    scrollYProgress, 
+    [0.4, 0.8], 
     [0, 16]
   );
-
+  
   // Footer的z-index随滚动逐渐增加，但保持在Header之下 - 更早开始增加
   const footerZIndex = useTransform(
     scrollYProgress,
     [0, 0.2, 0.5, 0.8],
     [1, 5, 15, 35]
   );
-
+  
   // 监听滚动到底部事件
   useEffect(() => {
     const handleScroll = () => {
@@ -40,16 +40,16 @@ export default function Layout({ children }) {
       if (window.scrollY > 10 && !hasScrolled) {
         setHasScrolled(true);
       }
-
+      
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
-
+      
       // 调整触发距离，让footer更早开始显示
       const isNearBottom = scrollPosition + windowHeight >= documentHeight - 300;
       // 检查是否在顶部
       const isAtTop = scrollPosition <= 50;
-
+      
       if (isNearBottom && !showFooter) {
         setShowFooter(true);
         if (window.location.hash !== '#footer') {
@@ -65,10 +65,10 @@ export default function Layout({ children }) {
         window.location.hash = '';
       }
     };
-
+    
     // 初始状态下不显示footer
     setShowFooter(false);
-
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [showFooter, hasScrolled]);
@@ -76,40 +76,41 @@ export default function Layout({ children }) {
   return (
     <ThemeColorSynchronizer>
       <div className="flex flex-col min-h-screen">
+        {/* <img src="/bg.png" className="fixed top-0 left-0 " /> */}
+        <video src="/img/Christmas.mp4" className="fixed top-0 left-0 w-full h-full object-cover" autoPlay loop muted></video>
         <Header />
-
+        
         {children}
-
+        
         {/* 添加更新提示 Toast */}
         {/* <UpdateToast /> */}
-
+        
         {/* 修改 Footer 容器，适应不同屏幕大小 */}
-        {/* <motion.div
+        {/* <motion.div 
           ref={footerRef}
-          style={{
+          style={{ 
             opacity: footerOpacity,
             backdropFilter: `blur(${footerBlur.get()}px)`,
             zIndex: footerZIndex,
             pointerEvents: showFooter ? 'auto' : 'none'
-          }}
+          }} 
           className="fixed inset-0 flex items-center justify-center overflow-y-auto"
         >
           <div className="w-full">
             <Footer />
           </div>
         </motion.div> */}
-
+        
         {/* 下滑提示 - 当footer显示时或已经滚动时隐藏 */}
-
         {/* {!showFooter && !hasScrolled && (
-          <motion.div
+          <motion.div 
             className="fixed bottom-24 left-0 right-0 mx-auto w-full text-center text-gray-400 text-sm pointer-events-none z-20"
             initial={{ opacity: 0.6 }}
-            animate={{
+            animate={{ 
               opacity: [0.6, 1, 0.6],
               y: [0, 10, 0]
             }}
-            transition={{
+            transition={{ 
               repeat: Infinity,
               duration: 2
             }}
@@ -120,8 +121,8 @@ export default function Layout({ children }) {
             </svg>
           </motion.div>
         )} */}
-
-        {/* 下方滚动空间 */}
+        
+        {/* 添加滚动空间 */}
         {/* <div className="h-screen"></div> */}
       </div>
     </ThemeColorSynchronizer>

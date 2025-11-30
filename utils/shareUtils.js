@@ -91,7 +91,7 @@ export async function requestNotificationPermission() {
  */
 export function sendTimerExpiredNotification(timer) {
   if (Notification.permission === "granted") {
-    new Notification("TimePulse 倒计时完成", {
+    new Notification("Live Countdown 倒计时完成", {
       body: `${timer.name} 的倒计时已结束！`,
       icon: "/favicon.ico",
     });
