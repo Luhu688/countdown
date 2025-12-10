@@ -12,9 +12,10 @@ class MyDocument extends Document {
           <link rel="manifest" href="/site.webmanifest" />
           <meta name="theme-color" content="#ffffff" />
           <script src="/register-sw.js" defer></script>
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7904369144696341" crossorigin="anonymous"></script>
         </Head>
         <body>
-          <Main />
+          <Main />  
           <NextScript />
         </body>
       </Html>
